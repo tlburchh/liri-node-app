@@ -24,16 +24,20 @@ if (option === twitter){
     //twitter access code
 }else if (option === spotifyThis){
     //spotify access code
-    spotify.search({ type: 'track', query: option2, limit: 2}, function(err, data) {
+    spotify.search({ type: 'track', query: option2, limit: 1}, function(err, data) {
         if (err) {
           return console.log('Error occurred: ' + err);
         }
         // console.log(data);
         // console.log(data.tracks.items);
-        var item = data.tracks.items[0];
+        var item = data.tracks.items;
+
         // console.log(item);
         for (var i = 0; i < item.length; i++){
-            console.log(item[i]);
+            console.log("Band: "+item[i].album.artists[0].name);
+            console.log("Song: "+item[i].name);
+            console.log("Preview: "+item[i].preview_url);
+            console.log("Album: "+item[i].album.name);
         }
     //   console.log("Artist: " + data.tracks.items); 
       //********issues navigating to artist object************
