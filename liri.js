@@ -24,23 +24,23 @@ if (option === twitter){
     //twitter access code
 }else if (option === spotifyThis){
     //spotify access code
-    spotify.search({ type: 'track', query: option2, limit: 5 }, function(err, data) {
+    spotify.search({ type: 'track', query: option2, limit: 2}, function(err, data) {
         if (err) {
           return console.log('Error occurred: ' + err);
         }
         // console.log(data);
         // console.log(data.tracks.items);
-        var item = data.tracks.items;
-        console.log(item);
-        for (var i = 0; i < items.artist.length; i++){
-            console.log(item.artist[i]);
+        var item = data.tracks.items[0];
+        // console.log(item);
+        for (var i = 0; i < item.length; i++){
+            console.log(item[i]);
         }
     //   console.log("Artist: " + data.tracks.items); 
       //********issues navigating to artist object************
       });
 }else if (option === movie){
     //omdb access code
-    request("http://www.omdbapi.com/?t="+ option2 + "s&y=&plot=short&apikey="+ key.omdb.apikey , function(error, response, body) {
+    request("http://www.omdbapi.com/?t="+ option2 + "&y=&plot=short&apikey="+process.env.OMDB_API , function(error, response, body) {
 
         // If the request is successful (i.e. if the response status code is 200)
         if (!error && response.statusCode === 200) {
@@ -49,7 +49,11 @@ if (option === twitter){
           // (Note: The syntax below for parsing isn't obvious. Just spend a few moments dissecting it).
       
           var parsedBody = JSON.parse(body);
-          console.log("The movie's rating is: " + parsedBody.imdbRating);
+          console.log("Title: "+ parsedBody.Title+
+                    "\nRated: "+ parsedBody.Rated+
+                    "\nYear: "+ parsedBody.Year+
+                    "\nPlot: "+ parsedBody.Plot+
+                    "\nThe movie's rating is: " + parsedBody.imdbRating);
         }
       });
       
